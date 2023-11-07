@@ -9,7 +9,7 @@ function User({setUser}) {
 
     return (
         <div className="start">
-            <h2 className="startHeader">How dares to take this challenge?</h2>
+            <h2 className="startHeader">Who dares to take this challenge?</h2>
             <input
                 className="startInput"
                 placeholder="Enter you name"
