@@ -10,7 +10,7 @@ import User from "./components/User";
 import quizData from "./data/quiz.json";
 
 function App() {
-  const [currentQuestion, setCurrentQuestion] = useState();
+  const [currentQuestion, setCurrentQuestion] = useState(null);
   const [timeOut, setTimeOut] = useState(false);
   const [score, setScore] = useState(0);
   const [user, setUser] = useState(null);
@@ -18,7 +18,7 @@ function App() {
   const handleCorrectAnswer = () => {
     if (score === quizData.length - 1) {
       alert(
-        `Well Done ! You Completed the quiz ! You scored ${score + 1} points.`
+        `Well Done ! You Completed the quiz ! You scored ${score + 1} points out off ${15} points.`
       );
       // Reset question and score states.
       setScore(0);
@@ -26,20 +26,18 @@ function App() {
       return;
     }
     // Incraese score and set next question.
-    // Incraese
-    setScore(score + 1);
-    setCurrentQuestion(quizData[score + 1]);
+    setScore((prevScore) => {
+      setCurrentQuestion(quizData[prevScore + 1]);
+      return prevScore + 1;
+    });
   };
 
   const handleIncorrectAnswer = () => {
-    alert(`Incorrect Answer Selected: Game Over! You scored ${score} points.`);
-
     // Reset question and score states.
-    setScore(0);
-    setCurrentQuestion(quizData[0]);
-
-    // TODO: Stop timer and reset states.
-    setTimeOut(false);
+    setScore((prevScore) => {
+      setCurrentQuestion(quizData[prevScore + 1]);
+      return prevScore;
+    });
   };
 
   const handleOptionClick = (selectedOption) => {
@@ -49,10 +47,18 @@ function App() {
     } else {
       handleIncorrectAnswer();
     }
+    console.log(score);
+  //   if (checkAnswer(selectedOption)) {
+  //     setScore((prevScore) => prevScore + 1);
+  //   } else {
+  //     setScore((prevScore) => prevScore);
+  //   }
+  //   console.log(score);
+  //   setCurrentQuestion(quizData[score + 1]);
   };
 
   const checkAnswer = (selectedOption) => {
-    return selectedOption === currentQuestion?.answer; // Returns a true or false. Comparing if the correct option was selected.
+    return selectedOption === currentQuestion?.correct_answer; // Returns a true or false. Comparing if the correct option was selected.
   };
 
   // Load quiz data into state.
@@ -86,7 +92,6 @@ function App() {
               </div>
               <div className="bottom">
                 <Trivia
-                  questionData={currentQuestion}
                   onOptionClick={handleOptionClick}
                   onAlertOK={handleAlertOK}
                 />
