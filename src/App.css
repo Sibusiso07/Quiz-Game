@@ -110,15 +110,79 @@ input {
 }
 
 button {
-    width: 7.5%;
-    height: 30px;
-    margin-top: 15px;
-    border: 1.5px solid black;
-    border-radius: 10px;
-    font-size: x-large;   
+    margin-top: 30px;
+    width: 200px;
+    height: 50px;
+    border-radius: 25px;
+    font-size: 20px;
+    font-weight: bold;
     cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    margin-bottom: 20px;
 }
 
 button:hover {
-    background-color: rgb(167, 165, 165);
+    background-color: #45a049;
+}
+
+.setup-container {
+    margin: 0 auto;
+    width: 80%;
+    text-align: center;
+}
+
+.setup-header {
+    margin-bottom: 20px;
+}
+
+.setup-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.setup-input {
+    margin-bottom: 30px;
+}
+
+.label-tag {
+    font-size: 28px; /* Increase font size for questions */
+}
+
+.option-tag select {
+    width: 350px; 
+    height: 50px; 
+    font-size: 20px; 
+    padding: 10px; 
+    border: 1px solid #ccc; 
+    border-radius: 15px; 
+    background-color: #fff; 
+    appearance: none; 
+    -webkit-appearance: none; 
+    -moz-appearance: none; 
+    cursor: pointer; 
+}
+
+.option-tag select:hover,
+.option-tag select:focus {
+    border-color: #555; /* Change border color on hover/focus */
+}
+
+button[type="submit"] {
+    width: 200px;
+    height: 50px;
+    border-radius: 25px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    margin-bottom: 20px; /* Add margin bottom */
+}
+
+button[type="submit"]:hover {
+    background-color: #45a049;
 }

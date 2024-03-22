@@ -1,18 +1,16 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import Setup from "./Setup";
 
 // Arrow functions are a more concise way of writing function expressions.
-const Trivia = ({ onOptionClick, number, category, difficulty, type }) => {
+const Trivia = ({ onOptionClick, data }) => {
 
   const [questionData, setQuestionData] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchTriviaData = async () => {
+
       try {
-        const response = await fetch("https://opentdb.com/api.php?amount=10&category=21&difficulty=easy&type=multiple");
-        const data = await response.json();
         console.log(data.results);
         const currentQuestion = data.results[0];
         setQuestionData({
@@ -23,12 +21,12 @@ const Trivia = ({ onOptionClick, number, category, difficulty, type }) => {
           option4: currentQuestion.incorrect_answers[2],
         });
         setLoading(false);
-      } catch (e) {
-        console.error(e);
+      } catch (err) {
+        console.error(err);
       }
     };
     fetchTriviaData();
-  }, []);
+  }, [data]);
 
   // Refactor - Prevent code duplication.
   const renderAnswer = (option, key) => (

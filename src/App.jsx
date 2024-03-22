@@ -15,11 +15,12 @@ function App() {
   const [timeOut, setTimeOut] = useState(false);
   const [score, setScore] = useState(0);
   const [user, setUser] = useState(null);
+  const [setupComplete, setSetupComplete] = useState(false);
 
   const handleCorrectAnswer = () => {
     if (score === quizData.length - 1) {
       alert(
-        `Well Done ! You Completed the quiz ! You scored ${score + 1} points out off ${15} points.`
+        `Well Done ! You Completed the quiz ! You scored ${score + 1} points.`
       );
       // Reset question and score states.
       setScore(0);
@@ -79,9 +80,11 @@ function App() {
       <div className="main">
         { !user ? (
           <User setUser={setUser} />
+          ) : !setupComplete ? (
+            <Setup setSetupComplete={setSetupComplete} />
           ) : (
             <>
-              <h2>Welcome to the Quiz Game</h2>
+              <h2>Let's Play</h2>
               <div className="top">
                 <div className="timer">
                   <Timer 

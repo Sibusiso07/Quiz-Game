@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 
-function User({setUser}) {
+function User({ setUser }) {
     const inputRef = useRef();
 
     const handleClick = () => {
@@ -9,14 +9,15 @@ function User({setUser}) {
 
     return (
         <div className="start">
-            <h2 className="startHeader">Who dares to take this challenge?</h2>
+            <h1 className="startHeader">Welcome Challenger!!</h1>
+            <h2 className="starHeader">Please Enter Your Name:</h2>
             <input
                 className="startInput"
-                placeholder="Enter you name"
+                placeholder="Enter your name"
                 ref={inputRef}
             />
             <button className="startButton" onClick={handleClick}>
-                Start
+                Enter
             </button>
         </div>
     );
