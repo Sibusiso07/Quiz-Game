@@ -5,6 +5,7 @@ import "./App.css";
 import Trivia from "./components/Trivia";
 import Timer from "./components/Timer";
 import User from "./components/User";
+import Setup from "./components/Setup";
 
 // Data.
 import quizData from "./data/quiz.json";

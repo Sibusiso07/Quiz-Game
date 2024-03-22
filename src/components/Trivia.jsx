@@ -1,9 +1,9 @@
 import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Setup from "./Setup";
 
 // Arrow functions are a more concise way of writing function expressions.
-const Trivia = ({ onOptionClick }) => {
+const Trivia = ({ onOptionClick, number, category, difficulty, type }) => {
 
   const [questionData, setQuestionData] = useState(null);
   const [loading, setLoading] = useState(true);
