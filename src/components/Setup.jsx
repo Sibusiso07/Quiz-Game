@@ -1,59 +1,36 @@
-import { useState, useEffect } from "react";
-import Trivia from "./Trivia";
+import { useState } from "react";
 
-function Setup({ setSetupComplete }) {
-    const [number, setNumber] = useState('');
-    const [category, setCategory] = useState('');
-    const [difficulty, setDifficulty] = useState('');
-    const [type, setType] = useState('');
-    const [data, setData] = useState('')
-
-    if (category === "general") {
-        setCategory('9');
-    } else if (category === "sports") {
-        setCategory('21');
-    } else if (category === "mythology") {
-        setCategory('20');
-    } else if (category === "geography") {
-        setCategory('22');
-    } else if (category === "history") {
-        setCategory('23');
-    } else if (category === "computers") {
-        setCategory('18');
-    }
-
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         try {
-    //             const url = `https://opentdb.com/api.php?amount=${number}&category=${category}&difficulty=${difficulty}&type=${type}`;
-    //             const response = await fetch(url);
-    //             const data = await response.json();
-    //             setData(data);
-    //         } catch (error) {
-    //             console.error(error);
-    //         }
-    //     };
-
-    //     if (number && category && difficulty && type) {
-    //         fetchData();
-    //     }
-    // }, [number, category, difficulty, type]);
+function Setup({ setSetupComplete, setQuizData }) {
+    const [number, setNumber] = useState('10'); // Default number of questions
+    const [category, setCategory] = useState('general'); // Default category
+    const [difficulty, setDifficulty] = useState('medium'); // Default difficulty
+    const [type, setType] = useState('multiple'); // Default type
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-            try {
-                const url = `https://opentdb.com/api.php?amount=${number}&category=${category}&difficulty=${difficulty}&type=${type}`;
-                const response = await fetch(url);
-                const data = await response.json();
-                console.log(data);
-                setData(data);
-            } catch (error) {
-                console.error(error);
-            }
-    };
 
-    const handleClick = () => {
-        setSetupComplete(true);
+        // Map category name to its corresponding value
+        const categoryMapping = {
+            general: '9',
+            sports: '21',
+            mythology: '20',
+            geography: '22',
+            history: '23',
+            computers: '18',
+        };
+        
+        const categoryId = categoryMapping[category] || '';
+
+        try {
+            const url = `https://opentdb.com/api.php?amount=${number}&category=${categoryId}&difficulty=${difficulty}&type=${type}`;
+            const response = await fetch(url);
+            const data = await response.json();
+            console.log(data);
+            setQuizData(data); // Pass data to App component
+            setSetupComplete(true); // Set setup as complete after successfully fetching data
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     return (
@@ -115,10 +92,9 @@ function Setup({ setSetupComplete }) {
                     </div>
                 </div>
                 <div className="setup-button">
-                    <button type="submit" onClick={handleClick}>Start</button>
+                    <button type="submit">Start</button>
                 </div>
             </form>
-            {data && <Trivia data={data} />}
         </div>
     );
 }
