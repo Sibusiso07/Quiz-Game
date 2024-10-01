@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-const Trivia = ({ onOptionClick, data, loading, currentQuestionIndex }) => {
+const Trivia = ({ onOptionClick, data, currentQuestionIndex, loading }) => {
   const [questionData, setQuestionData] = useState(null);
 
   useEffect(() => {
@@ -10,15 +10,17 @@ const Trivia = ({ onOptionClick, data, loading, currentQuestionIndex }) => {
 
     const currentQuestion = data.results[currentQuestionIndex];
 
-    if (currentQuestion) {
-      setQuestionData({
-        question: currentQuestion.question,
-        option1: currentQuestion.incorrect_answers[0],
-        option2: currentQuestion.incorrect_answers[1],
-        option3: currentQuestion.incorrect_answers[2],
-        option4: currentQuestion.correct_answer, // Assuming the last option is the correct one
-      });
-    }
+    setQuestionData({
+      question: currentQuestion.question,
+      options: currentQuestion.type === 'boolean'
+        ? [currentQuestion.correct_answer, ...currentQuestion.incorrect_answers]
+        : [
+            currentQuestion.incorrect_answers[0],
+            currentQuestion.incorrect_answers[1],
+            currentQuestion.incorrect_answers[2],
+            currentQuestion.correct_answer
+          ].sort(() => Math.random() - 0.5) // Shuffle for multiple-choice
+    });
   }, [data, loading, currentQuestionIndex]);
 
   const renderAnswer = (option, key) => (
@@ -32,13 +34,10 @@ const Trivia = ({ onOptionClick, data, loading, currentQuestionIndex }) => {
   return (
     <div className="trivia">
       <div className="question">
-        <h3>{questionData.question}</h3>
+        <h3>{questionData?.question}</h3>
       </div>
       <div className="answers">
-        {renderAnswer(questionData.option1, 1)}
-        {renderAnswer(questionData.option2, 2)}
-        {renderAnswer(questionData.option3, 3)}
-        {renderAnswer(questionData.option4, 4)}
+        {questionData.options.map((option, index) => renderAnswer(option, index))}
       </div>
     </div>
   );

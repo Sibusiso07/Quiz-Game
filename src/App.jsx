@@ -6,40 +6,35 @@ import User from "./components/User";
 import Setup from "./components/Setup";
 
 function App() {
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0); // Track current question index
   const [timeOut, setTimeOut] = useState(false);
   const [score, setScore] = useState(0);
   const [user, setUser] = useState(null);
   const [setupComplete, setSetupComplete] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [quizData, setQuizData] = useState(null); // To hold fetched quiz data
-
-  useEffect(() => {
-    setLoading(true);
-    // Simulating data fetching. The actual fetching will be handled in Setup.
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-  }, []);
+  const [quizData, setQuizData] = useState(null); // Store quiz data
+  const [loading, setLoading] = useState(false); // Loading state
 
   const handleAlertOK = () => {
     setTimeOut(false);
     setSetupComplete(false);
     setScore(0);
-    setCurrentQuestionIndex(0); // Reset question index when alert is acknowledged
+    setCurrentQuestionIndex(0); // Reset to first question
+    setUser(null); // Reset user state
+  };
+
+  const handleFinishQuiz = () => {
+    alert(`Well Done, ${user}! You scored ${score} points.`);
+    handleAlertOK(); // Reset the app
   };
 
   const handleOptionClick = (selectedOption) => {
     if (checkAnswer(selectedOption)) {
       setScore((prevScore) => prevScore + 1);
     }
-
-    // Move to the next question
-    if (currentQuestionIndex + 1 < quizData.results.length) {
-      setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+    if (currentQuestionIndex === quizData.results.length - 1) {
+      handleFinishQuiz(); // Finish the quiz
     } else {
-      alert(`Quiz Completed! Your score is ${score + 1}`);
-      // Reset or navigate as needed
+      setCurrentQuestionIndex((prevIndex) => prevIndex + 1); // Move to the next question
     }
   };
 
@@ -47,18 +42,24 @@ function App() {
     return selectedOption === quizData.results[currentQuestionIndex]?.correct_answer;
   };
 
+  useEffect(() => {
+    if (quizData) {
+      setCurrentQuestionIndex(0); // Reset to first question whenever quiz data changes
+    }
+  }, [quizData]);
+
   return (
     <div className="app">
       <div className="main">
         {!user ? (
           <User setUser={setUser} />
         ) : !setupComplete ? (
-          <Setup setSetupComplete={setSetupComplete} setQuizData={setQuizData} />
+          <Setup setSetupComplete={setSetupComplete} setQuizData={setQuizData} setLoading={setLoading} />
         ) : (
           <>
             <h2>Let's Play</h2>
             <div className="top">
-              {!loading && !timeOut && (
+              {!timeOut && (
                 <div className="timer">
                   <Timer setTimeOut={setTimeOut} questionData={quizData.results[currentQuestionIndex]} onAlertOK={handleAlertOK} />
                 </div>
@@ -66,10 +67,10 @@ function App() {
             </div>
             <div className="bottom">
               <Trivia
-                onOptionClick={handleOptionClick}
-                data={quizData} // Pass your quiz data here
+                data={quizData}
                 currentQuestionIndex={currentQuestionIndex}
-                loading={loading}
+                onOptionClick={handleOptionClick}
+                loading={loading} // Pass loading state to Trivia
               />
             </div>
           </>
