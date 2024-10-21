@@ -57,7 +57,7 @@ function App() {
           <Setup setSetupComplete={setSetupComplete} setQuizData={setQuizData} setLoading={setLoading} />
         ) : (
           <>
-            <h2>Let's Play</h2>
+            <h2 style={{ fontSize: '40px' }}>Let's Play</h2>
             <div className="top">
               {!timeOut && (
                 <div className="timer">

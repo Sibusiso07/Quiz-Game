@@ -18,8 +18,9 @@ function User({ setUser }) {
 
     return (
         <div className="start">
-            <h1 className="startHeader">Welcome Challenger!!</h1>
-            <h2 className="startHeader">Please Enter Your Name:</h2>
+            <h2 className="startHeader"> QuizMania</h2>
+            <h2 className="startWelcome">Welcome Challenger!</h2>
+            <h2 className="startChallenger">Enter Your Name:</h2>
             <input
                 className="startInput"
                 placeholder="Enter your name"

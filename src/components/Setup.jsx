@@ -36,7 +36,7 @@ function Setup({ setSetupComplete, setQuizData }) {
     return (
         <div className="setup-container">
             <div className="setup-header">
-                <h2>Choose your challenge</h2>
+                <h2 style={{ fontSize: '40px' }}>Choose your challenge</h2>
             </div>
             <form onSubmit={handleSubmit} className="setup-form">
                 <div className="setup-input">

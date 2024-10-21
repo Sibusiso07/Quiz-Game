@@ -16,8 +16,8 @@ h2 {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 40px;
-    font-size: 3rem;
+    margin-top: 10px;
+    font-size: 1rem;
 }
 
 .top {
@@ -99,6 +99,20 @@ h2 {
     font-size: 75px;
 }
 
+.start > .startWelcome {
+    font-size: 60px;
+    color: rgb(85, 135, 199);
+}
+
+.start > .startChallenger {
+    font-size: 50px;
+    color: rgb(219, 48, 48);
+}
+
+.Header {
+    font-size: 60px;
+}
+
 input {
     width: 20%;
     height: 35px;
@@ -134,7 +148,7 @@ button:hover {
 }
 
 .setup-header {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .setup-form {
